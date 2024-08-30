@@ -4,6 +4,6 @@ namespace ContosoUniversity.Models
     {
         public string? RequestId { get; set; }
 
-        public bool ShowRequestID => !string.IsNullOrEmpty(RequestId);
+        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
     }
 }
