@@ -120,5 +120,29 @@ namespace ContosoUniversity.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        public async Task<IActionResult> Details(int id)
+        {
+            if (id == null) // kui id on tühi, siis õpilast ei leita
+            {
+                return NotFound();
+            }
+            var student = await _context.Students.FirstOrDefaultAsync(m => m.ID == id); // Tehakse õpilase objekt andmebaasis oleva ID järgi
+
+            if (student == null) // Kui student object on tühi, siis ka ei leia.
+            {
+                return NotFound();
+            }
+            return View(student);
+        }
+        public async Task<IActionResult> Edit([Bind("ID, LastName, FirstMidName, EnrollmentDate")] Student student)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Students.Update(student);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(student);
+        }
     }
 }
