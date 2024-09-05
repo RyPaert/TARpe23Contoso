@@ -92,6 +92,33 @@ namespace ContosoUniversity.Controllers
             }
             return View(student);
         }
+        // Delete method, otsib andmebaasist kaasaantud id järgi õpilast
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) // kui id on tühi, siis õpilast ei leita
+            {
+                return NotFound();
+            }
+            var student = await _context.Students.FirstOrDefaultAsync(m => m.ID == id); // Tehakse õpilase objekt andmebaasis oleva ID järgi
+            
+            if (student == null) // Kui student object on tühi, siis ka ei leia.
+            {
+                return NotFound();
+            }
 
+            return View(student); 
+        }
+
+        // Delete POST meethod, teostab andmebaasis vajaliku muudatuse. ehk kustutab objekti.
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var student = await _context.Students.FindAsync(id); // Otsime databaseist õpilast id järgi ja panema ta student variablei
+
+            _context.Students.Remove(student);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
