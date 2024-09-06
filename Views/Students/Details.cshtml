@@ -1,0 +1,39 @@
+﻿@model ContosoUniversity.Models.Student
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detailsh1</h1>
+
+<h3>Detailsh3</h3>
+<div>
+    <h4>Student</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(Model => Model.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.LastName)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(Model => Model.FirstMidName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.FirstMidName)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(Model => Model.EnrollmentDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.EnrollmentDate)
+        </dd>
+    </dl>
+
+    <form asp-action="Details">
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
