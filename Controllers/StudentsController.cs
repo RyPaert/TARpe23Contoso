@@ -142,6 +142,7 @@ namespace ContosoUniversity.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+<<<<<<< HEAD
             return View(student);   
         }
         public async Task<IActionResult> Clone(int? id)
@@ -165,6 +166,9 @@ namespace ContosoUniversity.Controllers
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
+=======
+            return View(student);
+>>>>>>> cb0b6100c00ca5f2c32dc0080786808ff416c336
         }
     }
 }
