@@ -28,7 +28,7 @@ namespace ContosoUniversity.Models
         [Display(Name = "Hired on:")]
         public DateTime HireDate { get; set; }
 
-        public ICollection<CourseAssignment> CourseAssignment { get; set; }
+        public ICollection<CourseAssignment> CourseAssignments { get; set; }
         public OfficeAssignment? OfficeAssignment { get; set; }
 
         //Minu propertyd
