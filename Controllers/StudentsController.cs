@@ -142,7 +142,6 @@ namespace ContosoUniversity.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-<<<<<<< HEAD
             return View(student);   
         }
         public async Task<IActionResult> Clone(int? id)
@@ -151,9 +150,9 @@ namespace ContosoUniversity.Controllers
             {
                 return NotFound();
             }
-            var student = await _context.Students.FirstOrDefaultAsync(m => m.ID == id);
+            var student = await _context.Students.FirstOrDefaultAsync(m => m.ID == id); 
 
-            var studentClone = new Student
+            var studentClone = new Student // Cloneimiseks ma pean uuele variableile tegema uue studenti, ID-d ei pane, sest muidu ei tööta.
             {
                 FirstMidName = student.FirstMidName,
                 LastName = student.LastName,
@@ -166,9 +165,6 @@ namespace ContosoUniversity.Controllers
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
-=======
-            return View(student);
->>>>>>> cb0b6100c00ca5f2c32dc0080786808ff416c336
         }
     }
 }
