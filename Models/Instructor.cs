@@ -37,13 +37,12 @@ namespace ContosoUniversity.Models
         public int Wage{ get; set; }
 
         [Display(Name = "Parking Spot Number:")]
-        public ParkingSpotNumber? ParkingSpotNumber { get; set; }
+        public string ParkingSpotNumber { get; set; }
 
         [Required]
         [Display(Name = "Gender:")]
         [StringLength(1)]
         public string Gender { get; set; }
-        public int FavoriteStudentID {  get; set; }
-        public CriminalRecord? CriminalRecord { get; set; }
+        public int? FavoriteStudentID {  get; set; }
     }
 }
