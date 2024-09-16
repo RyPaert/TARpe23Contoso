@@ -30,13 +30,18 @@ namespace ContosoUniversity.Controllers
             if(id != null)
             {
                 ViewData["InstructorID"] = id.Value;
-                Instructor instructor = vm.Instructors.Where(i => i.ID == id.Value).Single();
-                vm.Courses = instructor.CourseAssignments.Select(i => i.Course);
+                Instructor instructor = vm.Instructors
+                    .Where(i => i.ID == id.Value).Single();
+                vm.Courses = instructor.CourseAssignments
+                    .Select(i => i.Course);
             }
             if (courseID != null)
             {
                 ViewData["CourseID"] = courseID.Value;
-                vm.Enrollments = vm.Courses.Where(x => x.CourseID == courseID.Value).Single().Enrollments;
+                vm.Enrollments = vm.Courses
+                    .Where(x => x.CourseID == courseID.Value)
+                    .Single()
+                    .Enrollments;
             }
             return View(vm);
 
@@ -52,28 +57,14 @@ namespace ContosoUniversity.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Instructor instructor/*, string selectedCourses*/)
+        public async Task<IActionResult> Create(Instructor instructor/*, string? selectedCourses*/)
         {
-  /*          if (selectedCourses == null)
-            {
-                instructor.CourseAssignments = new List<CourseAssignment>();
-                foreach (var course in selectedCourses)
-                {
-                    var courseToAdd = new CourseAssignment
-                    {
-                        InstructorID = instructor.ID,
-                        CourseID = course
-                    };
-                    instructor.CourseAssignments.Add(courseToAdd);
-                }
-            }*/
             if (ModelState.IsValid)
             {
                 _context.Add(instructor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            //PopulateAssignedCourseData(instructor); // Uuendab instructori juures olevaid kursuseid
             return View(instructor);
         }
 

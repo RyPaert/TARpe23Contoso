@@ -21,28 +21,26 @@ namespace ContosoUniversity.Models
 
         // Uus andmeväli moodustatakse olemasolevaist, mitte ei küsita kasutajalt korduvalt sama asja
         [Display(Name = "Full Name")]
-        public string FullName { get { return LastName + ", " + FirstMidName; } }
+        public string? FullName { get { return LastName + ", " + FirstMidName; } }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:YYYY-MM-DD}")]
         [Display(Name = "Hired on:")]
         public DateTime HireDate { get; set; }
 
-        public ICollection<CourseAssignment> CourseAssignments { get; set; }
-        public OfficeAssignment? OfficeAssignment { get; set; }
+        public ICollection<CourseAssignment>? CourseAssignments { get; set; }
+        public OfficeAssignment OfficeAssignment { get; set; }
 
         //Minu propertyd
-        [Required]
         [Display(Name = "Monthly pay is:")]
-        public int Wage{ get; set; }
+        public int? Wage{ get; set; }
 
         [Display(Name = "Parking Spot Number:")]
-        public string ParkingSpotNumber { get; set; }
+        public string? ParkingSpotNumber { get; set; }
 
-        [Required]
         [Display(Name = "Gender:")]
         [StringLength(1)]
-        public string Gender { get; set; }
+        public string? Gender { get; set; }
         public int? FavoriteStudentID {  get; set; }
     }
 }
