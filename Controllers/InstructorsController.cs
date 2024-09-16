@@ -52,9 +52,9 @@ namespace ContosoUniversity.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Instructor instructor, string selectedCourses)
+        public async Task<IActionResult> Create(Instructor instructor/*, string selectedCourses*/)
         {
-            if (selectedCourses == null)
+  /*          if (selectedCourses == null)
             {
                 instructor.CourseAssignments = new List<CourseAssignment>();
                 foreach (var course in selectedCourses)
@@ -66,14 +66,14 @@ namespace ContosoUniversity.Controllers
                     };
                     instructor.CourseAssignments.Add(courseToAdd);
                 }
-            }
+            }*/
             if (ModelState.IsValid)
             {
                 _context.Add(instructor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            PopulateAssignedCourseData(instructor); // Uuendab instructori juures olevaid kursuseid
+            //PopulateAssignedCourseData(instructor); // Uuendab instructori juures olevaid kursuseid
             return View(instructor);
         }
 
@@ -92,6 +92,32 @@ namespace ContosoUniversity.Controllers
                 });
             }
             ViewData["Courses"] = vm;
+        }
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var instructor = await _context.Instructors.FirstOrDefaultAsync(m => m.ID == id);
+
+            if (instructor == null)
+            {
+                return NotFound();
+            }
+
+            return View(instructor);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var instructor = await _context.Instructors.FindAsync(id);
+
+            _context.Instructors.Remove(instructor);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
