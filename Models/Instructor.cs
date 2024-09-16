@@ -8,16 +8,14 @@ namespace ContosoUniversity.Models
         [Key]
         public int ID { get; set; }
 
-        [Required]
         [StringLength(50)]
         [Display(Name = "Last Name")]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
-        [Required]
         [StringLength(50)]
         [Column("FirstName")]
         [Display(Name = "First Name")]
-        public string FirstMidName { get; set; }
+        public string? FirstMidName { get; set; }
 
         // Uus andmeväli moodustatakse olemasolevaist, mitte ei küsita kasutajalt korduvalt sama asja
         [Display(Name = "Full Name")]
@@ -29,7 +27,7 @@ namespace ContosoUniversity.Models
         public DateTime HireDate { get; set; }
 
         public ICollection<CourseAssignment>? CourseAssignments { get; set; }
-        public OfficeAssignment OfficeAssignment { get; set; }
+        public OfficeAssignment? OfficeAssignment { get; set; }
 
         //Minu propertyd
         [Display(Name = "Monthly pay is:")]

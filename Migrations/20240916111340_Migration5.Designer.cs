@@ -4,6 +4,7 @@ using ContosoUniversity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ContosoUniversity.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    partial class SchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20240916111340_Migration5")]
+    partial class Migration5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,6 +103,7 @@ namespace ContosoUniversity.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FirstMidName")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("FirstName");
@@ -112,6 +116,7 @@ namespace ContosoUniversity.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -223,7 +228,8 @@ namespace ContosoUniversity.Migrations
                 {
                     b.Navigation("CourseAssignments");
 
-                    b.Navigation("OfficeAssignment");
+                    b.Navigation("OfficeAssignment")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ContosoUniversity.Models.Student", b =>
