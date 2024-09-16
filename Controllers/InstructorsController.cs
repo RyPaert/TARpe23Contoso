@@ -110,5 +110,15 @@ namespace ContosoUniversity.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        public async Task<IActionResult> Edit(Instructor instructor)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Instructors.Update(instructor);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(instructor);
+        }
     }
 }
