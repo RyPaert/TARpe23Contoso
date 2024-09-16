@@ -120,5 +120,29 @@ namespace ContosoUniversity.Controllers
             }
             return View(instructor);
         }
+        public async Task<IActionResult> Clone(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var instructor = await _context.Instructors.FirstOrDefaultAsync(m => m.ID == id);
+
+            var instructorClone = new Instructor // Cloneimiseks ma pean uuele variableile tegema uue studenti, ID-d ei pane, sest muidu ei tööta.
+            {
+                FirstMidName = instructor.FirstMidName,
+                LastName = instructor.LastName,
+                HireDate = instructor.HireDate,
+                OfficeAssignment = instructor.OfficeAssignment
+            };
+
+            if (instructorClone != null)
+            {
+                _context.Instructors.Add(instructorClone);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
