@@ -85,6 +85,6 @@ public class DbInitializer
 		{
 			context.Enrollments.Add(enrollment);
 		}
-		context.SaveChanges();
+		context.SaveChanges();		
     }
 }

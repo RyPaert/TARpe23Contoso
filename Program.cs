@@ -13,6 +13,7 @@ internal class Program
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
         var app = builder.Build();
+        CreateDbIfNotExists(app);
 
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
@@ -34,5 +35,22 @@ internal class Program
             pattern: "{controller=Home}/{action=Index}/{id?}");
 
         app.Run();
+    }
+    private static void CreateDbIfNotExists(IHost host)
+    {
+        using (var scope = host.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            try
+            {
+                var context = services.GetRequiredService<SchoolContext>();
+                DbInitializer.Initialize(context);
+            }
+            catch (Exception ex)
+            {
+                var logger = services.GetRequiredService<ILogger<Program>>();
+                logger.LogError(ex, "Error occurd while creating database");
+            }
+        }
     }
 }
