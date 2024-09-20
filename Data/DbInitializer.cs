@@ -52,12 +52,10 @@ public class DbInitializer
             new Course{CourseID=2021, Title="Kirjandus", Credits=3},
             new Course{CourseID=9000, Title="faze clan hate club", Credits=1},
         };
-		foreach (Course course in Courses)
-		{
-			context.Courses.Add(course);
-		}
+		context.Courses.AddRange(Courses);
 		context.SaveChanges();
 
+		if (context.Enrollments.Any()) { return; }
 		var enrollments = new Enrollment[]
 		{
 			new Enrollment{StudentID=1, CourseID=1050, Grade=Grade.A},
@@ -81,10 +79,37 @@ public class DbInitializer
 
             new Enrollment{StudentID=10, CourseID=1050, Grade=Grade.A},
         };
-		foreach (Enrollment enrollment in enrollments)
-		{
-			context.Enrollments.Add(enrollment);
-		}
-		context.SaveChanges();		
+		context.Enrollments.AddRange(enrollments);
+		context.SaveChanges();
+
+
+        if (context.Instructors.Any()) { return; }
+
+        // Objekt õpilastega, mis lisatakse siis, kui õpilasi sisestatud ei ole.
+        var instructors = new Instructor[]
+        {
+			// new Student{firstMidName="", LastName="", EnrollmentDate=DateTime.Parse("")}
+			new Instructor{FirstMidName="Beth", 
+							LastName="Schunk", 
+							HireDate=DateTime.Parse("2069-04-20"),
+							ParkingSpotNumber="",
+							Gender="F")},
+            new Instructor{FirstMidName="Miz", LastName="Kif", HireDate=DateTime.Parse("2002-09-01")},
+            new Instructor{FirstMidName="Yung", LastName="Jeff", HireDate=DateTime.Parse("2005-02-19")},
+            new Instructor{FirstMidName="Mynama", LastName="Jeff", HireDate=DateTime.Parse("2005-02-19")},
+            new Instructor{FirstMidName="John", LastName="Venelane", HireDate=DateTime.Parse("2003-09-01")},
+            new Instructor{FirstMidName="John", LastName="Ubisoft", HireDate=DateTime.Parse("2004-09-01")},
+            new Instructor{FirstMidName="Student", LastName="Teacher", HireDate=DateTime.Parse("2005-09-01")},
+            new Instructor{FirstMidName="Franz", LastName="Ferdinand", HireDate=DateTime.Parse("2006-09-01")},
+            new Instructor{FirstMidName="Sigma", LastName="Toilet", HireDate=DateTime.Parse("2007-09-01")},
+            new Instructor{FirstMidName="Skibidi", LastName="Gyatt", HireDate=DateTime.Parse("2008-09-01")},
+        };
+        foreach (Instructor instructor in instructors)
+        {
+            context.Instructors.Add(instructor);
+        }
+
+        context.Instructors.AddRange(instructors);
+        context.SaveChanges();
     }
 }
