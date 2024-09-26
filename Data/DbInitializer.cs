@@ -31,33 +31,35 @@ public class DbInitializer
 			new Student{FirstMidName="Nino", LastName="Olivetto", EnrollmentDate=DateTime.Parse("2007-09-01")},
 			new Student{FirstMidName="Carson", LastName="Alexander", EnrollmentDate=DateTime.Parse("2008-09-01")},
 		};
-
-		// Iga õpilane lisatakse ükshaaval läbi foreach tsükli
-		foreach (Student student in students)
-		{
-			context.Students.Add(student);
-		}
-		// Ja andmebaasi muudatused salvestatakse.
+		context.Students.AddRange(students);
 		context.SaveChanges();
-		// Sama struktuur mis enne aga kursustega 
-		var Courses = new Course[]
+
+        if (context.Courses.Any()) 
+		{ 
+			return; 
+		}
+
+        var courses = new Course[]
 		{
 			//new Course{CourseID=, Title="", Credits=},
-			new Course{CourseID=1050, Title="Keemia", Credits=3},
-            new Course{CourseID=4022, Title="Mikroökonoomika", Credits=3},
-            new Course{CourseID=4041, Title="Mikroökonoomika", Credits=3},
-            new Course{CourseID=1045, Title="Calculus", Credits=4},
-            new Course{CourseID=3141, Title="Trigonomeetria", Credits=4},
-            new Course{CourseID=3141, Title="Kompositsioon", Credits=4},
-            new Course{CourseID=2021, Title="Kirjandus", Credits=3},
-            new Course{CourseID=9000, Title="faze clan hate club", Credits=1},
+			new Course{ID=1050, Title="Keemia", Credits=3},
+            new Course{ID=4022, Title="Mikroökonoomika", Credits=3},
+            new Course{ID=4041, Title="Mikroökonoomika", Credits=3},
+            new Course{ID=1045, Title="Calculus", Credits=4},
+            new Course{ID=3141, Title="Trigonomeetria", Credits=4},
+            new Course{ID=3141, Title="Kompositsioon", Credits=4},
+            new Course{ID=2021, Title="Kirjandus", Credits=3},
+            new Course{ID=9000, Title="faze clan hate club", Credits=1},
         };
-		foreach (Course course in Courses)
-		{
-			context.Courses.Add(course);
-		}
+		context.Courses.AddRange(courses);
 		context.SaveChanges();
 
+		/*
+		if (context.Enrollments.Any()) 
+		{ 
+			return; 
+		}
+		
 		var enrollments = new Enrollment[]
 		{
 			new Enrollment{StudentID=1, CourseID=1050, Grade=Grade.A},
@@ -81,10 +83,65 @@ public class DbInitializer
 
             new Enrollment{StudentID=10, CourseID=1050, Grade=Grade.A},
         };
-		foreach (Enrollment enrollment in enrollments)
-		{
-			context.Enrollments.Add(enrollment);
-		}
+		context.Enrollments.AddRange(enrollments);
 		context.SaveChanges();
+		*/
+
+        if (context.Instructors.Any()) 
+		{ 
+			return; 
+		}
+
+		// Objekt õpilastega, mis lisatakse siis, kui õpilasi sisestatud ei ole.
+		var instructors = new Instructor[]
+		{
+			// new Student{firstMidName="", LastName="", EnrollmentDate=DateTime.Parse("")}
+			new Instructor{FirstMidName="Beth",
+					LastName="Schunk",
+							HireDate=DateTime.Parse("2069-04-20"),
+							ParkingSpotNumber="A1",
+							Gender="F"},
+            new Instructor{FirstMidName="Miz",
+							LastName="Kif",
+							HireDate=DateTime.Parse("2002-09-01"),
+							Gender="M"
+							}
+        };
+        context.Instructors.AddRange(instructors);
+        context.SaveChanges();
+
+		if (context.Departments.Any())
+		{
+			return;
+		}
+		var departments = new Department[]
+		{
+			new Department
+			{
+				Name = "InfoTechnology",
+				Budget = 0,
+				StartDate = DateTime.Parse("2024/01/01"),
+				DepartmentDescription = "Sigma sigma on the wall who is the skibidest of them all",
+				FrenchDepartmentDescription = "Sigma Sigma sur le mur qui est le plus skiable de tous",
+				InstructorID = 1,
+            },
+            new Department
+            {
+                Name = "SigmaTechnology",
+                Budget = 0,
+                StartDate = DateTime.Parse("2024/05/05"),
+                DepartmentDescription = "Do you know what it's like to have a conversation sigma to sigma, rizz",
+                FrenchDepartmentDescription = "Savez-vous ce que c'est que d'avoir une conversation sigma à sigma, Rizz ?",
+                InstructorID = 2,
+            },
+            new Department
+            {
+                Name = "CS Smoke Lineups",
+                Budget = 0,
+                StartDate = DateTime.Parse("1842/05/05"),
+                DepartmentDescription = "CS2 Smoke lineups",
+                FrenchDepartmentDescription = "Composition des équipes de CS2 Smoke"
+            }
+        };
     }
 }
