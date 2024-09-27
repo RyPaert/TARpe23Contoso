@@ -72,6 +72,7 @@ namespace ContosoUniversity.Controllers
             }
             return View(department);
         }
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -81,6 +82,25 @@ namespace ContosoUniversity.Controllers
             _context.Departments.Remove(department);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+        [HttpGet]
+        public async Task<IActionResult> BaseOn(int id)
+        {
+            Department department = _context.Departments.Find(id);
+            return View(department);
+        }
+        [HttpPost]
+        public async Task<IActionResult> BaseOn(Department department)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Departments.Add(department);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+
+            }
+            return View(department);
+
         }
     }
 }
