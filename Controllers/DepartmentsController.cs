@@ -101,23 +101,41 @@ namespace ContosoUniversity.Controllers
             }
             return View(department);
         }
-        public async Task<IActionResult> Make(int id)
+        [HttpGet]
+        public async Task<IActionResult> BaseOn(int id)
         {
             var department = _context.Departments.Find(id);
             return View(department);
         }
         [HttpPost]
-        public async Task<IActionResult> Make(Department department)
+        public async Task<IActionResult> BaseOn(Department department)
         {
             if (ModelState.IsValid)
             {
                 _context.Departments.Add(department);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-
+            }
+            return View(department);
+        }
+        [HttpGet]
+        public async Task<IActionResult> BaseOnDelete(int id)
+        {
+            var department = _context.Departments.Find(id);
+            return View(department);
+        }
+        [HttpPost]
+        public async Task<IActionResult> BaseOnDelete(Department department)
+        {
+            if (ModelState.IsValid)
+            {
+                var basedDepartment = await _context.Departments.FindAsync(department);
+                _context.Departments.Add(basedDepartment);
+                _context.Departments.Remove(department);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
             return View(department);
         }
     }
 }
-//Name, Budget, StartDate, RowVersion, DepartmentDescription, FrenchDepartmentDescription
