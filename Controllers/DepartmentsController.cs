@@ -31,9 +31,9 @@ namespace ContosoUniversity.Controllers
                                             .Include(d => d.Administrator)
                                             .AsNoTracking()
                                             .FirstOrDefaultAsync();
-            if (department == null) 
-            { 
-                return NotFound(); 
+            if (department == null)
+            {
+                return NotFound();
             }
             return View(department);
 
@@ -46,7 +46,7 @@ namespace ContosoUniversity.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name, Budget, StartDate, RowVersion, DepartmentDescription, FrenchDepartmentDescription")]Department department)
+        public async Task<IActionResult> Create([Bind("Name, Budget, StartDate, RowVersion, DepartmentDescription, FrenchDepartmentDescription")] Department department)
         {
             if (ModelState.IsValid)
             {
@@ -84,13 +84,30 @@ namespace ContosoUniversity.Controllers
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
-        public async Task<IActionResult> BaseOn(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             Department department = _context.Departments.Find(id);
             return View(department);
         }
         [HttpPost]
-        public async Task<IActionResult> BaseOn(Department department)
+        public async Task<IActionResult> Edit(Department department)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Departments.Update(department);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+
+            }
+            return View(department);
+        }
+        public async Task<IActionResult> Make(int id)
+        {
+            var department = _context.Departments.Find(id);
+            return View(department);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Make(Department department)
         {
             if (ModelState.IsValid)
             {
@@ -100,7 +117,7 @@ namespace ContosoUniversity.Controllers
 
             }
             return View(department);
-
         }
     }
 }
+//Name, Budget, StartDate, RowVersion, DepartmentDescription, FrenchDepartmentDescription
