@@ -88,7 +88,7 @@ namespace ContosoUniversity.Controllers
         {
             if (id == null)
             {
-                return NotFound();      
+                return NotFound();
             }
             var departmentToEdit = await _context.Departments
                     .Include(i => i.Administrator)
@@ -144,12 +144,12 @@ namespace ContosoUniversity.Controllers
                     else
                     {
                         var databaseValues = (Department)databaseEntry.ToObject();
-                        if (databaseValues.Name != clientValues.Name) { ModelState.AddModelError("Name", $"Current value: {databaseValues.Name}");}
-                        if (databaseValues.StartDate != clientValues.StartDate) { ModelState.AddModelError("Name", $"Current value: {databaseValues.StartDate}");}
-                        if (databaseValues.Budget != clientValues.Budget) { ModelState.AddModelError("Name", $"Current value: {databaseValues.Budget}");}
-                        if (databaseValues.DepartmentDescription != clientValues.DepartmentDescription) { ModelState.AddModelError("Name", $"Current value: {databaseValues.DepartmentDescription}");}
-                        if (databaseValues.FrenchDepartmentDescription != clientValues.FrenchDepartmentDescription) { ModelState.AddModelError("Name", $"Current value: {databaseValues.FrenchDepartmentDescription}");}
-                        if (databaseValues.InstructorID != clientValues.InstructorID) { ModelState.AddModelError("Name", $"Current value: {databaseValues.InstructorID}");}
+                        if (databaseValues.Name != clientValues.Name) { ModelState.AddModelError("Name", $"Current value: {databaseValues.Name}"); }
+                        if (databaseValues.StartDate != clientValues.StartDate) { ModelState.AddModelError("Name", $"Current value: {databaseValues.StartDate}"); }
+                        if (databaseValues.Budget != clientValues.Budget) { ModelState.AddModelError("Name", $"Current value: {databaseValues.Budget}"); }
+                        if (databaseValues.DepartmentDescription != clientValues.DepartmentDescription) { ModelState.AddModelError("Name", $"Current value: {databaseValues.DepartmentDescription}"); }
+                        if (databaseValues.FrenchDepartmentDescription != clientValues.FrenchDepartmentDescription) { ModelState.AddModelError("Name", $"Current value: {databaseValues.FrenchDepartmentDescription}"); }
+                        if (databaseValues.InstructorID != clientValues.InstructorID) { ModelState.AddModelError("Name", $"Current value: {databaseValues.InstructorID}"); }
                         {
                             Instructor databaseHasThisInstructor = await _context.Instructors.FirstOrDefaultAsync(i => i.ID == databaseValues.InstructorID);
                             ModelState.AddModelError("Name", $"Current value: {databaseValues.InstructorID}");
@@ -166,42 +166,24 @@ namespace ContosoUniversity.Controllers
             ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "Fullname", departmentToUpdate.InstructorID);
             return View(departmentToUpdate);
         }
-
         [HttpGet]
-        public async Task<IActionResult> BaseOn(int id)
+        public async Task<IActionResult> Baseon(int? id)
         {
             var department = _context.Departments.Find(id);
             return View(department);
         }
         [HttpPost]
-        public async Task<IActionResult> BaseOn(Department department)
+        public async Task<IActionResult> Baseon(Department department)
         {
             if (ModelState.IsValid)
             {
                 _context.Departments.Add(department);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            return View(department);
-        }
-        [HttpGet]
-        public async Task<IActionResult> BaseOnDelete(int id)
-        {
-            var department = _context.Departments.Find(id);
-            return View(department);
-        }
-        [HttpPost]
-        public async Task<IActionResult> BaseOnDelete(Department department)
-        {
-            if (ModelState.IsValid)
-            {
-                var basedDepartment = await _context.Departments.FindAsync(department);
-                _context.Departments.Add(basedDepartment);
-                _context.Departments.Remove(department);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
             }
             return View(department);
         }
     }
 }
+
