@@ -1,12 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ContosoUniversity.Data;
+using ContosoUniversity.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace ContosoUniversity.Controllers
 {
     public class DepartmentsController : Controller
     {
-        public IActionResult Index()
+        private readonly SchoolContext _context;
+
+        public DepartmentsController(SchoolContext context)
         {
-            return View();
+            _context = context;
         }
-    }
-}
+        public async Task<IActionResult> Index()
+        {
+            var schoolContext = _context.Departments.Include(d => d.Administrator);
+            return View(await schoolContext.ToListAsync());
+        }
