@@ -78,6 +78,16 @@ namespace ContosoUniversity.Controllers
             return View(course);
 
         }
+        public async Task<IActionResult> Edit([Bind("Title, Credits")] Course course)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Courses.Update(course);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(course);
+        }
 
     }
 }
