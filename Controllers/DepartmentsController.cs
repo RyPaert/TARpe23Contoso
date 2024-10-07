@@ -165,4 +165,23 @@ namespace ContosoUniversity.Controllers
             ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "Fullname", departmentToUpdate.InstructorID);
             return View(departmentToUpdate);
         }
+        [HttpGet]
+        public async Task<IActionResult> Baseon(int? id)
+        {
+            var department = _context.Departments.Find(id);
+            return View(department);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Baseon(Department department)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Departments.Add(department);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+
+            }
+            return View(department);
+        }
+    }
 }
