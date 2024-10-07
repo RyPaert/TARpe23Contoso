@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ContosoUniversity.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    [Migration("20241007101444_Mig3")]
-    partial class Mig3
+    [Migration("20241007151958_Mig1")]
+    partial class Mig1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
