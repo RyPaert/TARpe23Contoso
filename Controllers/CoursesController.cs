@@ -88,6 +88,25 @@ namespace ContosoUniversity.Controllers
             }
             return View(course);
         }
+        public async Task<IActionResult> Clone(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var course = await _context.Courses.FirstOrDefaultAsync(m => m.ID == id);
 
+            var courseClone = new Course
+            {
+                Title = course.Title,
+                Credits = course.Credits
+            };
+            if (courseClone != null)
+            {
+                _context.Courses.Add(courseClone);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
