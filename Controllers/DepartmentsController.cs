@@ -176,10 +176,10 @@ namespace ContosoUniversity.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Departments.Add(department);
-                await _context.SaveChangesAsync();
+                var baseonDepartment = department;
+                _context.Departments.Add(baseonDepartment);
+                await _context.SaveChangesAsync();                
                 return RedirectToAction(nameof(Index));
-
             }
             return View(department);
         }
